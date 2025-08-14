@@ -14,3 +14,8 @@ provider "aws"{
 resource "aws_vpc" "development" {
     cidr_block = "10.0.0.0/16"
 }
+resource "aws_subnet" "dev_subnet_1"{
+    vpc_id = aws_subnet.dev_subnet_1.id
+    cidr_block = "10.0.10.0/24"
+    availabilty_zone = "ap-south-1a"
+}
