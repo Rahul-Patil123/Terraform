@@ -6,41 +6,32 @@ terraform {
     }
   }
 }
-provider "aws"{
-    region = "ap-south-1"
-    access_key = my_access_key
-    secret_key = my_secret_key
-}
-resource "aws_vpc" "development" {
-    cidr_block = "10.0.0.0/16"
-}
-resource "aws_subnet" "dev_subnet_1"{
-    subnet_id = aws_subnet.dev_subnet_1.id
-    cidr_block = "10.0.10.0/24"
-    availabilty_zone = "ap-south-1a"
-}
-data "aws_vpc" "existing_vpc"{
-    default = true
-}
-variable "cidr_block" {
-  description = "Vpc id for default vpc"
-  type = list(object({
-    cidr_block = string
-    name = string
-  }))
-}
-#Terraform environment variable
+provider "aws"{}
+
 variable avail_zone {}
+variable vpc_cidr_block {}
+variable subnet_cidr_block {}
+variable env_prefix {}
 
-resource "aws_subnet" "dev_subnet_2"{
-    vpc_id = data.aws_vpc.existing_vpc.id
-    cidr_block = var.cidr_block[0].cidr_block
+resource "aws_vpc" "myapp-vpc" {
+    cidr_block = var.vpc_cidr_block
     tags = {
-        name = var.cidr_block[0].name
+        Name: "${var.env_prefix}-vpc"
     }
+}
+resource "aws_subnet" "myapp_subnet_1"{
+    vpc_id = aws_vpc.myapp-vpc.id
+    cidr_block = var.subnet_cidr_block
     availabilty_zone = var.avail_zone
+    tags = {
+        Name: "${var.env_prefix}-subnet-1"
+    }
 }
 
-output "dev-vpc-id" {
-  value = "data.aws_vpc.existing_vpc.id"
-}
+
+# data "aws_vpc" "existing_vpc"{
+#     default = true
+# }
+# output "dev-vpc-id" {
+#   value = "data.aws_vpc.existing_vpc.id"
+# }
