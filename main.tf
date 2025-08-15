@@ -23,7 +23,9 @@ data "aws_vpc" "existing_vpc"{
     default = true
 }
 variable "default_cidr_block" {
-  description = "data.aws_vpc.existing_vpc.id"
+  description = "Vpc id for default vpc"
+  default = "10.0.10.0/24"
+  type = string
 }
 
 resource "aws_subnet" "dev_subnet_2"{

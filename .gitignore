@@ -10,7 +10,7 @@ crash.log
 crash.*.log
 
 # Variable files with sensitive data
-*.tfvars
+# *.tfvars
 *.tfvars.json
 
 # Override files
