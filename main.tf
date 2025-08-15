@@ -22,8 +22,12 @@ resource "aws_subnet" "dev_subnet_1"{
 data "aws_vpc" "existing_vpc"{
     default = true
 }
+variable "default_cidr_block" {
+  description = "data.aws_vpc.existing_vpc.id"
+}
+
 resource "aws_subnet" "dev_subnet_2"{
-    vpc_id = data.aws_vpc.existing_vpc.id
+    vpc_id = var.default_cidr_block
     cidr_block = "172.31.10.0/24"
     availabilty_zone = "ap-south-1a"
 }
