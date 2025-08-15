@@ -1,5 +1,5 @@
 # Local .terraform directories
-**/.terraform/*
+.terraform/*
 
 # Terraform state files
 *.tfstate
@@ -21,4 +21,3 @@ override.tf.json
 
 # Plan files
 *.plan
-.terraform.lock.hcl
