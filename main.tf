@@ -29,12 +29,18 @@ variable "cidr_block" {
     name = string
   }))
 }
+#Terraform environment variable
+variable avail_zone {}
 
 resource "aws_subnet" "dev_subnet_2"{
     vpc_id = data.aws_vpc.existing_vpc.id
     cidr_block = var.cidr_block[0].cidr_block
-    availabilty_zone = "ap-south-1a"
+    tags = {
+        name = var.cidr_block[0].name
+    }
+    availabilty_zone = var.avail_zone
 }
+
 output "dev-vpc-id" {
   value = "data.aws_vpc.existing_vpc.id"
 }
