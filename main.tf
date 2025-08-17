@@ -47,6 +47,10 @@ resource "aws_internet_gateway" "myapp-igw" {
         Name: "${var.env_prefix}-igw"
     }
 }
+resource "aws_route_table_associations" "a-rtb" {
+    subnet_id = aws_subnet.myapp_subnet_1.id
+    route_table_id = aws_route_table.myapp-route-table.id
+}
 # data "aws_vpc" "existing_vpc"{
 #     default = true
 # }
