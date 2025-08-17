@@ -68,8 +68,7 @@ resource "aws_internet_gateway" "myapp-igw" {
         Name: "${var.env_prefix}-igw"
     }
 }
- resource "aws_security_group" "myapp-sg" {
-    name = "myapp-sg"
+ resource "aws_default_security_group" "default-sg" {
     vpc_id = aws_vpc.myapp-vpc.id
     ingress {
         from_port = 22
@@ -91,6 +90,6 @@ resource "aws_internet_gateway" "myapp-igw" {
         prefix_list_ids = []
     }
     tags = {
-        Name: "${var.env_prefix}-sg"
+        Name: "${var.env_prefix}-default-sg"
     }
  }
