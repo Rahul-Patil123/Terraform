@@ -6,7 +6,9 @@ terraform {
     }
   }
 }
-provider "aws"{}
+provider "aws"{
+    region = "ap-south-1"
+}
 
 variable avail_zone {}
 variable vpc_cidr_block {}
@@ -22,7 +24,7 @@ resource "aws_vpc" "myapp-vpc" {
 resource "aws_subnet" "myapp_subnet_1"{
     vpc_id = aws_vpc.myapp-vpc.id
     cidr_block = var.subnet_cidr_block
-    availabilty_zone = var.avail_zone
+    availability_zone = var.avail_zone
     tags = {
         Name: "${var.env_prefix}-subnet-1"
     }

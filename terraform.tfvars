@@ -1,3 +1,4 @@
-cidr_blocks = [
-    {cidr_block = "10.0.10.0/16", name = "Dev-vpc"}
-]
+avail_zone = "10.0.0.0/16"
+vpc_cidr_block = "10.0.10.0/24"
+subnet_cidr_block = "ap-south-1a"
+env_prefix = "dev"
