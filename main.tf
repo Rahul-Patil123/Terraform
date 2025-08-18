@@ -110,4 +110,12 @@ resource "aws_instance" "myapp-server" {
     # ami = "ami-0b83c7f5e2823d1f4"
     ami = data.aws_ami.latest-amazon-linux-image.id
     instance_type = var.instance_type
+    subnet_id = aws_subnet.myapp_subnet_1.id
+    vpc_security_group_ids = [aws_default_security_group.default-sg.id]
+
+    associate_public_ip_address = true
+    key_name = "server-key-pair"
+    tags = {
+        Name: "${var.env_prefix}-server"
+    }
 }
