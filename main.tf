@@ -121,6 +121,15 @@ resource "aws_instance" "myapp-server" {
 
     associate_public_ip_address = true
     key_name = "server-key-pair"
+    # This is a way to enter into EC2 instance
+    user_data = <<EOF
+                    #!/bin/bash
+                    sudo yum update -y && sudo yum install -y docker
+                    sudo systemctl start docker
+                    sudo usermod -aG docker ec2-user
+                    docker run -p 8080:80 nginx
+                EOF
+
     tags = {
         Name: "${var.env_prefix}-server"
     }
