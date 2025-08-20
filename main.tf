@@ -16,6 +16,7 @@ variable subnet_cidr_block {}
 variable env_prefix {}
 variable my_ip {}
 variable instance_type {}
+variable my_public_key_location {}
 
 resource "aws_vpc" "myapp-vpc" {
     cidr_block = var.vpc_cidr_block
@@ -106,6 +107,11 @@ data "aws_ami" "latest-amazon-linux-image" {
         values = ["hvm"]
     }
 }
+resource "aws_key_pair" "ssh-key" {
+    key_name = "server-key-pair"
+    public_key = file(var.my_public_key_location)
+}
+
 resource "aws_instance" "myapp-server" {
     # ami = "ami-0b83c7f5e2823d1f4"
     ami = data.aws_ami.latest-amazon-linux-image.id
