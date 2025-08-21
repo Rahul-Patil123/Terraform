@@ -138,11 +138,16 @@ resource "aws_instance" "myapp-server" {
         user = "ec2-user"
         private_key = file(var.private_key_location)
     }
+    privisioner "file" {
+        source = "entry-script.sh"
+        destination = "/home/ec2-user/entry-script.sh"
+    }
     privisioner "remote-exec"{
-        inline = [
-            "export ENV=dev",
-            "mkdir newDir"
-        ]
+        # inline = [
+        #     "export ENV=dev",
+        #     "mkdir newDir"
+        # ]
+        script = file("entry-script.sh")
     }
 
     tags = {
