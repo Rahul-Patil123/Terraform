@@ -17,6 +17,7 @@ variable env_prefix {}
 variable my_ip {}
 variable instance_type {}
 variable my_public_key_location {}
+variable private_key_location {}
 
 resource "aws_vpc" "myapp-vpc" {
     cidr_block = var.vpc_cidr_block
@@ -130,6 +131,19 @@ resource "aws_instance" "myapp-server" {
     #                 docker run -p 8080:80 nginx
     #             EOF
     user_data = file("entry-script.sh")
+
+    connection {
+        type = "ssh"
+        host = self.public_ip
+        user = "ec2-user"
+        private_key = file(var.private_key_location)
+    }
+    privisioner "remote-exec"{
+        inline = [
+            "export ENV=dev",
+            "mkdir newDir"
+        ]
+    }
 
     tags = {
         Name: "${var.env_prefix}-server"
