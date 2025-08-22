@@ -149,6 +149,9 @@ resource "aws_instance" "myapp-server" {
         # ]
         script = file("entry-script.sh")
     }
+    privisioner "local-exec" {
+        command = "echo {self.public_ip}"
+    }
 
     tags = {
         Name: "${var.env_prefix}-server"
