@@ -10,15 +10,6 @@ provider "aws"{
     region = "ap-south-1"
 }
 
-variable avail_zone {}
-variable vpc_cidr_block {}
-variable subnet_cidr_block {}
-variable env_prefix {}
-variable my_ip {}
-variable instance_type {}
-variable my_public_key_location {}
-variable private_key_location {}
-
 resource "aws_vpc" "myapp-vpc" {
     cidr_block = var.vpc_cidr_block
     tags = {
@@ -152,7 +143,6 @@ resource "aws_instance" "myapp-server" {
     privisioner "local-exec" {
         command = "echo {self.public_ip}"
     }
-
     tags = {
         Name: "${var.env_prefix}-server"
     }
