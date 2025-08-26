@@ -1,3 +1,3 @@
-output "subnet" {
-    value = aws_subnet.myapp_subnet_1
+output "instance" {
+    value = aws_instance.myapp_server
 }
