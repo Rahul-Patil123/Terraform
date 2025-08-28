@@ -12,7 +12,7 @@ resource "aws_default_security_group" "default-sg" {
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
-    engress {
+    egress {
         from_port = 0
         to_port = 0
         protocol = "-1"
@@ -67,18 +67,18 @@ resource "aws_instance" "myapp-server" {
         user = "ec2-user"
         private_key = file(var.private_key_location)
     }
-    privisioner "file" {
+    provisioner "file" {
         source = "entry-script.sh"
         destination = "/home/ec2-user/entry-script.sh"
     }
-    privisioner "remote-exec"{
+    provisioner "remote-exec"{
         # inline = [
         #     "export ENV=dev",
         #     "mkdir newDir"
         # ]
         script = file("entry-script.sh")
     }
-    privisioner "local-exec" {
+    provisioner "local-exec" {
         command = "echo {self.public_ip}"
     }
     tags = {

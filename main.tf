@@ -32,6 +32,7 @@ module "myapp-server" {
   my_ip = var.my_ip
   env_prefix = var.env_prefix
   my_public_key_location = var.my_public_key_location
+  private_key_location = var.private_key_location
   instance_type = var.instance_type
   subnet_id = module.myapp-subnet.subnet.id
   avail_zone = var.avail_zone
