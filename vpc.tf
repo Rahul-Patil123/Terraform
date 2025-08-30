@@ -9,7 +9,6 @@ terraform {
 provider "aws"{
     region = "ap-south-1"
 }
-variable vpc_cidr_block {}
 variable private_subnet_cidr_blocks {}
 variable public_subnet_cidr_blocks {}
 
@@ -28,9 +27,18 @@ module "myapp-vpc" {
     enable_nat_gateway = true
     single_nat_gateway = true
     enable_dns_hostname = true
-
-    tags {
+#  We are using this tags to tell CCM Cloud Control Manager to communicate with resources belonging to same group of resources
+    tags = {
         "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
     }
 
+    public_subnet_tags = {
+        "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
+        "kubernetes.io/role/elb" = "1" # Elastic Load Balancer
+    }
+    private_subnet_tags = {
+        "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
+        "kubernetes.io/role/internal-elb" = "1"
+    }
+    
 }
