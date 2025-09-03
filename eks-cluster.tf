@@ -1,7 +1,7 @@
 # After creating all files we need to specify which configuration to access for kubectl which is available in .kube/config
 # Commands to run before after applying terraform files : 
 # aws eks update-kubeconfig --name myapp-eks-cluster --region stated in terraform file.
- 
+
 provider "kubernetes" {
     load_config_file = false 
     host = data.aws_eks_cluster.myapp-cluster.endpoint
@@ -15,7 +15,6 @@ data "aws_eks_cluster_auth" "myapp-cluster" {
     name = module.eks.cluster_id
 
 }
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "21.1.5"
